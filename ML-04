@@ -1,0 +1,59 @@
+# 0. Import libraries
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# 1. Define the function and its derivative
+
+def f(x):
+    return (x + 3)**2
+
+def grad_f(x):
+    return 2 * (x + 3)
+
+
+# 2. Initialize parameters for Gradient Descent
+
+x_current = 2
+learning_rate = 0.1
+tolerance = 1e-6
+max_iterations = 100
+history = [x_current]
+
+
+# 3. Gradient Descent Loop
+
+for i in range(max_iterations):
+
+    gradient = grad_f(x_current)
+
+    x_next = x_current - learning_rate * gradient
+
+    # Check convergence
+    if abs(x_next - x_current) < tolerance:
+        x_current = x_next
+        history.append(x_current)
+        print(f"Converged after {i+1} iterations.")
+        break
+
+    x_current = x_next
+    history.append(x_current)
+
+    print(f"Iteration {i+1}: x = {x_current:.6f}, f(x) = {f(x_current):.6f}")
+
+
+# 4. Print the result
+
+print("Local minima at x =", x_current)
+print("Function value at local minima y =", f(x_current))
+
+
+# 5. Plotting
+
+plt.plot(history, [f(val) for val in history], marker='o')
+plt.xlabel("x values")
+plt.ylabel("f(x)")
+plt.title("Gradient Descent Convergence")
+plt.grid()
+plt.show()
